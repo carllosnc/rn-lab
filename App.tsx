@@ -4,14 +4,12 @@ import { StatusBar } from 'expo-status-bar';
 import * as Font from 'expo-font';
 import { SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useSharedValue } from 'react-native-reanimated';
-
-import { LiquidBottomBar } from './src/components/liquid-bottom-bar/LiquidBottomBar';
+import { HomeScreen } from './src/screens/TabScreens';
+import { LiquidBottomBarScreen } from './src/screens/LiquidBottomBarScreen';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const activeIndex = useSharedValue(0);
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentScreen, setCurrentScreen] = useState('Home');
 
   useEffect(() => {
     async function loadFonts() {
@@ -27,30 +25,20 @@ export default function App() {
     return null;
   }
 
-  const tabs = [
-    { id: 'home', label: 'Home', activeColor: '#6366F1', iconName: 'home-outline' as any },
-    { id: 'search', label: 'Search', activeColor: '#3B82F6', iconName: 'search-outline' as any },
-    { id: 'shop', label: 'Shop', activeColor: '#8B5CF6', iconName: 'basket-outline' as any },
-    { id: 'cart', label: 'Cart', activeColor: '#10B981', iconName: 'cart-outline' as any },
-    { id: 'profile', label: 'Profile', activeColor: '#F59E0B', iconName: 'person-outline' as any },
-  ];
+  const navigate = (screen: string) => {
+    setCurrentScreen(screen);
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View style={styles.content}>
-          <Text style={styles.title}>{tabs[currentTab].label}</Text>
-          <Text style={styles.subtitle}>Premium Liquid Navigation</Text>
-        </View>
-
-        <LiquidBottomBar
-          tabs={tabs}
-          activeIndex={activeIndex}
-          onTabChange={setCurrentTab}
-        />
-
-        <StatusBar style="light" />
+        {currentScreen === 'Home' ? (
+          <HomeScreen onNavigate={navigate} />
+        ) : (
+          <LiquidBottomBarScreen onNavigate={navigate} />
+        )}
       </View>
+      <StatusBar style="light" />
     </GestureHandlerRootView>
   );
 }
@@ -58,22 +46,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 42,
-    fontWeight: '900',
-    color: '#FFFFFF',
-    fontFamily: 'SpaceGrotesk_700Bold',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: 'rgba(255,255,255,0.5)',
-    marginTop: 8,
-    fontFamily: 'SpaceGrotesk_700Bold',
   },
 });

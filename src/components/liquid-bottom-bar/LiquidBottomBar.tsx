@@ -124,7 +124,7 @@ export const LiquidBottomBar = ({
 
           <Group layer={liquidPaint}>
             <Path path={backgroundPath} color="#000000" />
-            <Circle cx={liquidPos} cy={40} r={CIRCLE_RADIUS} color={activeIndicatorColor} />
+            <Circle cx={liquidPos} cy={40} r={CIRCLE_RADIUS} color="#000000" />
             <LinearGradient
               start={vec(0, 40)}
               end={vec(0, 40 + barHeight)}

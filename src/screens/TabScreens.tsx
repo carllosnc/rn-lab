@@ -1,11 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export const HomeScreen = () => (
-  <View style={styles.container}>
-    <Text style={styles.text}>Home Screen</Text>
-  </View>
-);
+export const HomeScreen = ({ onNavigate }: { onNavigate: (screen: string) => void }) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Home Screen</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => onNavigate('LiquidBottomBar')}
+      >
+        <Text style={styles.buttonText}>Liquid Bottom Bar Example</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export const SearchScreen = () => (
   <View style={styles.container}>
@@ -34,7 +42,6 @@ export const ProfileScreen = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -42,5 +49,17 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#6366F1',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
