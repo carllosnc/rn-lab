@@ -1,63 +1,55 @@
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { CryptoButton } from './src/components/crypto-button/crypto-button';
-import { CARDANO_DATA, AVALANCHE_DATA } from './src/components/crypto-button/crypto-data';
-
-import {
-  useFonts,
-  SpaceGrotesk_400Regular,
-  SpaceGrotesk_500Medium,
-  SpaceGrotesk_600SemiBold,
-  SpaceGrotesk_700Bold,
-} from '@expo-google-fonts/space-grotesk';
-
+import * as Font from 'expo-font';
+import { SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useSharedValue } from 'react-native-reanimated';
+
+import { LiquidBottomBar } from './src/components/liquid-bottom-bar/LiquidBottomBar';
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    SpaceGrotesk_400Regular,
-    SpaceGrotesk_500Medium,
-    SpaceGrotesk_600SemiBold,
-    SpaceGrotesk_700Bold,
-  });
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const activeIndex = useSharedValue(0);
+  const [currentTab, setCurrentTab] = useState(0);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        SpaceGrotesk_700Bold,
+      });
+      setFontsLoaded(true);
+    }
+    loadFonts();
+  }, []);
 
   if (!fontsLoaded) {
     return null;
   }
 
+  const tabs = [
+    { id: 'home', label: 'Home', activeColor: '#6366F1', iconName: 'home-outline' as any },
+    { id: 'search', label: 'Search', activeColor: '#3B82F6', iconName: 'search-outline' as any },
+    { id: 'shop', label: 'Shop', activeColor: '#8B5CF6', iconName: 'basket-outline' as any },
+    { id: 'cart', label: 'Cart', activeColor: '#10B981', iconName: 'cart-outline' as any },
+    { id: 'profile', label: 'Profile', activeColor: '#F59E0B', iconName: 'person-outline' as any },
+  ];
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View style={styles.buttonRow}>
-          <CryptoButton />
-          <CryptoButton
-            config={{
-              name: 'Cardano',
-              symbol: 'USD',
-              logo: require('./assets/cardano.png'),
-              gradientColors: ['#1060ffff', '#000000'],
-              shadowColor: 'rgba(93, 141, 255, 1)',
-              initialPrice: 0.354,
-              initialChange: { abs: 12, pct: 1.2 },
-              dataPoints: CARDANO_DATA,
-              simulate: true,
-            }}
-          />
-          <CryptoButton
-            config={{
-              name: 'Avalanche',
-              symbol: 'USD',
-              logo: require('./assets/avalanche.png'),
-              gradientColors: ['#E84142ff', '#000000'],
-              shadowColor: 'rgba(232, 65, 66, 1)',
-              initialPrice: 38.42,
-              initialChange: { abs: -2.1, pct: -5.2 },
-              dataPoints: AVALANCHE_DATA,
-              simulate: true,
-            }}
-          />
+        <View style={styles.content}>
+          <Text style={styles.title}>{tabs[currentTab].label}</Text>
+          <Text style={styles.subtitle}>Premium Liquid Navigation</Text>
         </View>
-        <StatusBar style="auto" />
+
+        <LiquidBottomBar
+          tabs={tabs}
+          activeIndex={activeIndex}
+          onTabChange={setCurrentTab}
+        />
+
+        <StatusBar style="light" />
       </View>
     </GestureHandlerRootView>
   );
@@ -66,12 +58,22 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+  },
+  content: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonRow: {
-    gap: 20,
-    alignItems: 'center',
+  title: {
+    fontSize: 42,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    fontFamily: 'SpaceGrotesk_700Bold',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: 'rgba(255,255,255,0.5)',
+    marginTop: 8,
+    fontFamily: 'SpaceGrotesk_700Bold',
   },
 });
