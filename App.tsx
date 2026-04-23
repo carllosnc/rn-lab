@@ -4,12 +4,11 @@ import { StatusBar } from 'expo-status-bar';
 import * as Font from 'expo-font';
 import { SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { HomeScreen } from './src/screens/TabScreens';
-import { LiquidBottomBarScreen } from './src/screens/LiquidBottomBarScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { Router } from './src/navigation/router';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState('Home');
 
   useEffect(() => {
     async function loadFonts() {
@@ -25,19 +24,11 @@ export default function App() {
     return null;
   }
 
-  const navigate = (screen: string) => {
-    setCurrentScreen(screen);
-  };
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        {currentScreen === 'Home' ? (
-          <HomeScreen onNavigate={navigate} />
-        ) : (
-          <LiquidBottomBarScreen onNavigate={navigate} />
-        )}
-      </View>
+      <NavigationContainer>
+        <Router />
+      </NavigationContainer>
       <StatusBar style="light" />
     </GestureHandlerRootView>
   );
