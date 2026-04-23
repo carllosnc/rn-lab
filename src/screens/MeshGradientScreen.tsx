@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { MeshGradient } from '../components/mesh-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { Header } from '../partials';
@@ -29,6 +30,7 @@ export const MeshGradientScreen = () => {
           </Text>
         </View>
       </SafeAreaView>
+      <StatusBar style="light" />
     </View>
   );
 };

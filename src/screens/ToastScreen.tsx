@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable, SafeAreaView } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useToast } from '../components/toast/toast';
 import { Header } from '../partials';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
@@ -79,6 +80,7 @@ export const ToastScreen = () => {
           />
         </View>
       </SafeAreaView>
+      <StatusBar style="dark" />
     </View>
   );
 };
