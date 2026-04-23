@@ -2,9 +2,9 @@
 
 A high-fidelity React Native playground for experimenting with advanced animations, Skia-based graphics, and premium UI components.
 
-![RN Lab Hero](https://img.shields.io/badge/React--Native-0.81.5-blue?style=for-the-badge&logo=react)
-![Expo](https://img.shields.io/badge/Expo-54-white?style=for-the-badge&logo=expo)
-![Skia](https://img.shields.io/badge/Shopify--Skia-Latest-red?style=for-the-badge)
+![RN Lab Hero](https://img.shields.io/badge/React--Native-0.81.5-000000?style=for-the-badge&logo=react)
+![Expo](https://img.shields.io/badge/Expo-54-000000?style=for-the-badge&logo=expo)
+![Skia](https://img.shields.io/badge/Shopify--Skia-Latest-000000?style=for-the-badge)
 
 ## Features
 
