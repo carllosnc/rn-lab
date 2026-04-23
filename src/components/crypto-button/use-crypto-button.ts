@@ -53,7 +53,7 @@ export const useCryptoButton = (config: CryptoConfig) => {
   const onSelectPeriod = (period: Period) => {
     setSelectedPeriod(period);
     chartProgress.value = 0;
-    chartProgress.value = withTiming(1, { duration: 600 });
+    chartProgress.value = withTiming(1, { duration: 350 });
   };
 
   useLayoutEffect(() => {
@@ -85,20 +85,20 @@ export const useCryptoButton = (config: CryptoConfig) => {
   const tapGesture = Gesture.Tap()
     .onBegin(() => {
       if (expandProgress.value === 0) {
-        pressScale.value = withTiming(0.95, { duration: 100 });
+        pressScale.value = withTiming(0.95, { duration: 80 });
       }
     })
     .onFinalize(() => {
       if (expandProgress.value === 0) {
-        pressScale.value = withTiming(1, { duration: 100 });
+        pressScale.value = withTiming(1, { duration: 80 });
       }
     })
     .onEnd(() => {
       if (expandProgress.value === 0) {
         expandProgress.value = withSpring(1, {
-          mass: 1,
-          damping: 15,
-          stiffness: 100,
+          mass: 0.8,
+          damping: 20,
+          stiffness: 180,
         });
       }
     });
@@ -149,9 +149,9 @@ export const useCryptoButton = (config: CryptoConfig) => {
 
   const handleClose = () => {
     expandProgress.value = withSpring(0, {
-      mass: 1,
-      damping: 15,
-      stiffness: 100,
+      mass: 0.8,
+      damping: 20,
+      stiffness: 180,
     });
   };
 
