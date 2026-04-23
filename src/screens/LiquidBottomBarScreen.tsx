@@ -3,11 +3,11 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Animated, { useAnimatedStyle, useSharedValue, interpolateColor } from 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/router';
 
+import { Header } from '../partials';
 import { LiquidBottomBar } from '../components/liquid-bottom-bar/LiquidBottomBar';
 
 export const LiquidBottomBarScreen = () => {
@@ -38,12 +38,7 @@ export const LiquidBottomBarScreen = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Animated.View style={[styles.container, animatedStyle]}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons name="arrow-back" size={28} color="#FFFFFF" />
-        </TouchableOpacity>
+        <Header />
 
         <View style={styles.content}>
           <Text style={styles.title}>{tabs[currentTab].label}</Text>
@@ -65,15 +60,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  backButton: {
-    position: 'absolute',
-    top: 60,
-    left: 20,
-    zIndex: 10,
-    padding: 10,
-    backgroundColor: 'rgba(255,255,255,0.15)',
-    borderRadius: 20,
-  },
   content: {
     flex: 1,
     alignItems: 'center',
@@ -83,6 +69,6 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: 'normal',
     color: '#FFFFFF',
-    fontFamily: 'SpaceGrotesk_300Bold',
+    fontFamily: 'Inter_600SemiBold',
   },
 });

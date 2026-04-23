@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { Header } from '../partials';
 import { CryptoButton, BITCOIN_CONFIG } from '../components/crypto-button/crypto-button';
 import { CARDANO_DATA, AVALANCHE_DATA } from '../components/crypto-button/crypto-data';
 
@@ -40,12 +40,7 @@ export const CryptoButtonScreen = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons name="arrow-back" size={28} color="#111827" />
-        </TouchableOpacity>
+        <Header light />
 
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.buttonList}>
@@ -77,15 +72,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9FAFB',
   },
-  backButton: {
-    position: 'absolute',
-    top: 60,
-    left: 20,
-    zIndex: 10,
-    padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 20,
-  },
   scrollContent: {
     flex: 1,
     justifyContent: 'center',
@@ -97,13 +83,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     color: '#0F172A',
-    fontFamily: 'SpaceGrotesk_700Bold',
+    fontFamily: 'Inter_700Bold',
   },
   subtitle: {
     fontSize: 16,
     color: '#64748B',
     marginTop: 8,
-    fontFamily: 'SpaceGrotesk_400Regular',
+    fontFamily: 'Inter_400Regular',
   },
   buttonList: {
     marginTop: 0,
@@ -122,6 +108,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: 14,
     color: '#475569',
-    fontFamily: 'SpaceGrotesk_500Medium',
+    fontFamily: 'Inter_500Medium',
   },
 });
