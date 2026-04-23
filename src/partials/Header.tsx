@@ -30,6 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ title, light = false }) => {
 const styles = StyleSheet.create({
   container: {
     zIndex: 100,
+    width: '100%',
   },
   content: {
     flexDirection: 'row',
@@ -50,9 +51,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.05)',
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#FFF',
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'Inter_600Bold',
   },
   titleLight: {
     color: '#000',

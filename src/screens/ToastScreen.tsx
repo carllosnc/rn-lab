@@ -1,7 +1,49 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, Pressable, SafeAreaView } from 'react-native';
 import { useToast } from '../components/toast/toast';
 import { Header } from '../partials';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+const ToastButton = ({ 
+  title, 
+  message, 
+  type, 
+  label, 
+  onPress 
+}: { 
+  title: string; 
+  message: string; 
+  type: 'success' | 'error' | 'message'; 
+  label: string;
+  onPress: (options: any) => void;
+}) => {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.96);
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1);
+  };
+
+  return (
+    <AnimatedPressable 
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      onPress={() => onPress({ title, message, type })}
+      style={[styles.button, animatedStyle]}
+    >
+      <Text style={styles.buttonText}>{label}</Text>
+    </AnimatedPressable>
+  );
+};
 
 export const ToastScreen = () => {
   const { showToast } = useToast();
@@ -9,45 +51,32 @@ export const ToastScreen = () => {
   return (
     <View style={styles.container}>
       <Header title="Toast Gallery" light />
-      
+
       <SafeAreaView style={styles.content}>
-        <Text style={styles.description}>
-          A custom animated toast system with success, error, and info states.
-        </Text>
-
         <View style={styles.buttonContainer}>
-          <TouchableOpacity 
-            style={[styles.button, styles.successButton]}
-            onPress={() => showToast({
-              title: 'Payment Successful',
-              message: 'Your transaction of $45.00 has been processed. A receipt was sent to your email.',
-              type: 'success'
-            })}
-          >
-            <Text style={styles.buttonText}>Show Success Toast</Text>
-          </TouchableOpacity>
+          <ToastButton
+            label="Success Toast"
+            title="Payment Successful"
+            message="Your transaction of $45.00 has been processed. A receipt was sent to your email."
+            type="success"
+            onPress={showToast}
+          />
 
-          <TouchableOpacity 
-            style={[styles.button, styles.errorButton]}
-            onPress={() => showToast({
-              title: 'Connection Error',
-              message: 'Unable to sync your changes. Please check your internet connection and try again.',
-              type: 'error'
-            })}
-          >
-            <Text style={styles.buttonText}>Show Error Toast</Text>
-          </TouchableOpacity>
+          <ToastButton
+            label="Error Toast"
+            title="Connection Error"
+            message="Unable to sync your changes. Please check your internet connection and try again."
+            type="error"
+            onPress={showToast}
+          />
 
-          <TouchableOpacity 
-            style={[styles.button, styles.messageButton]}
-            onPress={() => showToast({
-              title: 'Update Available',
-              message: 'A new version of the app is ready. Install now to get the latest performance fixes.',
-              type: 'message'
-            })}
-          >
-            <Text style={styles.buttonText}>Show Info Toast</Text>
-          </TouchableOpacity>
+          <ToastButton
+            label="Info Toast"
+            title="Update Available"
+            message="A new version of the app is ready. Install now to get the latest performance fixes."
+            type="message"
+            onPress={showToast}
+          />
         </View>
       </SafeAreaView>
     </View>
@@ -58,45 +87,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8FAFC',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   content: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 40,
-  },
-  description: {
-    fontSize: 16,
-    color: '#64748B',
-    textAlign: 'center',
-    marginBottom: 40,
-    fontFamily: 'Inter_400Regular',
+    justifyContent: 'center',
   },
   buttonContainer: {
-    gap: 16,
+    gap: 12,
   },
   button: {
-    height: 60,
-    borderRadius: 16,
+    height: 56,
+    width: 200,
+    borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    backgroundColor: '#dadada',
   },
   buttonText: {
-    color: '#FFF',
-    fontSize: 16,
-    fontFamily: 'Inter_700Bold',
-  },
-  successButton: {
-    backgroundColor: '#10B981',
-  },
-  errorButton: {
-    backgroundColor: '#EF4444',
-  },
-  messageButton: {
-    backgroundColor: '#3B82F6',
+    color: '#3b3b3bff',
+    fontSize: 15,
   },
 });

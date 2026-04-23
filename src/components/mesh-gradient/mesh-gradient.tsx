@@ -40,7 +40,7 @@ export const MeshGradient: React.FC<MeshGradientProps> = ({
   React.useEffect(() => {
     clock.value = withRepeat(
       withTiming(Math.PI * 2, {
-        duration: 3000,
+        duration: 3500,
         easing: Easing.inOut(Easing.sin),
       }),
       -1,
