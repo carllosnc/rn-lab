@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({ title, light = false }) => {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <View style={styles.content}>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={[styles.backButton, light && styles.backButtonLight]}
         >
