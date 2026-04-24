@@ -4,13 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/router';
 import { Ionicons } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const EXAMPLES = [
   { id: 'LiquidBottomBar', title: 'Liquid Bottom Bar', icon: 'water' },
   { id: 'CryptoButton', title: 'Crypto Buttons', icon: 'logo-bitcoin' },
   { id: 'MeshGradient', title: 'Mesh Gradient', icon: 'color-palette' },
   { id: 'Toast', title: 'Toast Notifications', icon: 'notifications' },
+  { id: 'Volume', title: 'Volume Control', icon: 'volume-high' },
   { id: 'Glassmorphism', title: 'Glassmorphism Tab Bar (Soon)', icon: 'layers', disabled: true },
 ];
 
@@ -19,9 +20,9 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <SafeAreaView edges={['top']} style={styles.header}>
         <Text style={styles.title}>RN Lab</Text>
-      </View>
+      </SafeAreaView>
 
       <FlatList
         data={EXAMPLES}
@@ -41,7 +42,6 @@ export const HomeScreen = () => {
         )}
         contentContainerStyle={styles.listContent}
       />
-      <StatusBar style="dark" />
     </View>
   );
 };
@@ -52,15 +52,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8FAFC',
   },
   header: {
-    paddingTop: 80,
     paddingHorizontal: 20,
+    paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: '#FFF',
     borderBottomWidth: 1,
     borderBottomColor: '#F1F5F9',
   },
   title: {
-    fontSize: 28,
+    fontSize: 20,
     color: '#0F172A',
     fontFamily: 'Inter_700Bold',
   },
