@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FONTS } from '../constants/settings';
 
 interface HeaderProps {
   title?: string;
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     color: '#FFF',
-    fontFamily: 'Inter_600Bold',
+    fontFamily: FONTS.inter.semiBold,
   },
   titleLight: {
     color: '#000',

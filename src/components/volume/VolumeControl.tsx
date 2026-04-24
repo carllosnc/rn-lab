@@ -17,6 +17,7 @@ import Animated, {
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { AnimatedNumber } from '../animated-number/animated-number';
+import { FONTS } from '../../constants/settings';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SIZE = SCREEN_WIDTH * 0.8;
@@ -40,7 +41,7 @@ export const VolumeControl: React.FC<VolumeControlProps> = ({
   const [displayValue, setDisplayValue] = React.useState(initialValue);
   const volume = useSharedValue(initialValue);
   const lastVolume = useSharedValue(initialValue > 0 ? initialValue : 75);
-  
+
   const isMuted = displayValue === 0;
 
   useAnimatedReaction(
@@ -145,7 +146,7 @@ export const VolumeControl: React.FC<VolumeControlProps> = ({
           <Canvas style={{ flex: 1 }}>
             <Path
               path={backgroundPath}
-              color="#E2E8F0"
+              color="#d4d4d4ff"
               style="stroke"
               strokeWidth={STROKE_WIDTH}
               strokeCap="round"
@@ -184,15 +185,15 @@ export const VolumeControl: React.FC<VolumeControlProps> = ({
         </View>
       </GestureDetector>
 
-      <TouchableOpacity 
-        activeOpacity={0.8} 
+      <TouchableOpacity
+        activeOpacity={0.8}
         onPress={toggleMute}
         style={styles.muteButton}
       >
-        <Ionicons 
-          name={isMuted ? "volume-mute" : "volume-medium"} 
-          size={24} 
-          color="#FFFFFF" 
+        <Ionicons
+          name={isMuted ? "volume-mute" : "volume-medium"}
+          size={24}
+          color="#FFFFFF"
         />
       </TouchableOpacity>
     </View>
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
   number: {
     fontSize: 60,
     color: '#FFFFFF',
-    fontFamily: 'Inter_600Regular',
+    fontFamily: FONTS.inter.semiBold,
     fontVariant: ['tabular-nums'],
   },
   muteButton: {

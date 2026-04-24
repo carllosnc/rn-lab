@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { FONTS } from '../../constants/settings';
 
 export const styles = StyleSheet.create({
   fullscreen: {
@@ -47,7 +48,7 @@ export const styles = StyleSheet.create({
   coinTitle: {
     color: 'white',
     fontSize: 24,
-    fontFamily: 'SpaceGrotesk_600SemiBold',
+    fontFamily: FONTS.inter.semiBold,
     flex: 1,
   },
   buyButton: {
@@ -58,7 +59,7 @@ export const styles = StyleSheet.create({
   },
   buyText: {
     color: 'black',
-    fontFamily: 'SpaceGrotesk_700Bold',
+    fontFamily: FONTS.inter.bold,
     fontSize: 14,
   },
   priceContainer: {
@@ -66,7 +67,7 @@ export const styles = StyleSheet.create({
   currencyLabel: {
     color: 'rgba(255,255,255,0.7)',
     fontSize: 14,
-    fontFamily: 'SpaceGrotesk_700Bold',
+    fontFamily: FONTS.inter.bold,
   },
   labelRow: {
     flexDirection: 'row',
@@ -81,17 +82,17 @@ export const styles = StyleSheet.create({
   priceText: {
     color: 'white',
     fontSize: 48,
-    fontFamily: 'SpaceGrotesk_700Bold',
+    fontFamily: FONTS.inter.bold,
   },
   percentageText: {
     color: '#00FFA3',
     fontSize: 18,
-    fontFamily: 'SpaceGrotesk_500Medium',
+    fontFamily: FONTS.inter.medium,
   },
   timestamp: {
     color: '#ffffffff',
     fontSize: 15,
-    fontFamily: 'SpaceGrotesk_400Regular',
+    fontFamily: FONTS.inter.regular,
   },
   footer: {
     flexDirection: 'row',
@@ -117,12 +118,12 @@ export const styles = StyleSheet.create({
   chipText: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'SpaceGrotesk_500Medium',
+    fontFamily: FONTS.inter.medium,
   },
   chipTextActive: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'SpaceGrotesk_700Bold',
+    fontFamily: FONTS.inter.bold,
   },
   contentWrapper: {
     alignItems: 'center',

@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useToast } from '../components/toast/toast';
 import { Header } from '../partials';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { FONTS } from '../constants/settings';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#dadada',
   },
   buttonText: {
-    color: '#3b3b3bff',
+    color: '#000000ff',
+    fontFamily: FONTS.inter.bold,
     fontSize: 15,
   },
 });

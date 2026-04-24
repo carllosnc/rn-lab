@@ -1,4 +1,5 @@
 import React from 'react';
+import { FONTS } from '../constants/settings';
 import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: '#0F172A',
-    fontFamily: 'Inter_700Bold',
+    fontFamily: FONTS.inter.bold,
   },
   listContent: {
     paddingVertical: 10,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 16,
     color: '#334155',
-    fontFamily: 'Inter_500Medium',
+    fontFamily: FONTS.inter.medium,
   },
   disabled: {
     opacity: 0.5,

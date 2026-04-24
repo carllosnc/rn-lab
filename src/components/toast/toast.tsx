@@ -14,6 +14,7 @@ import Animated, {
   runOnJS,
   Easing,
 } from 'react-native-reanimated';
+import { FONTS } from '../../constants/settings';
 
 export type ToastType = 'success' | 'error' | 'message';
 
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: FONTS.inter.bold,
     marginBottom: 2,
   },
   message: {
