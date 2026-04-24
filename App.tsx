@@ -40,7 +40,7 @@ export default function App() {
           <Router />
         </NavigationContainer>
       </ToastProvider>
-      <StatusBar style="light" />
+      <StatusBar style="auto" />
     </GestureHandlerRootView>
   );
 }
