@@ -7,6 +7,7 @@ import { MeshGradientScreen } from '../screens/MeshGradientScreen';
 import { ToastScreen } from '../screens/ToastScreen';
 import { VolumeScreen } from '../screens/VolumeScreen';
 import { ConditionalButtonScreen } from '../screens/ConditionalButtonScreen';
+import { MorphingFabScreen } from '../screens/MorphingFabScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -16,6 +17,7 @@ export type RootStackParamList = {
   Toast: undefined;
   Volume: undefined;
   ConditionalButton: undefined;
+  MorphingFab: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -57,6 +59,10 @@ export const Router = () => {
       <Stack.Screen
         name="ConditionalButton"
         component={ConditionalButtonScreen}
+      />
+      <Stack.Screen
+        name="MorphingFab"
+        component={MorphingFabScreen}
       />
     </Stack.Navigator>
   );

@@ -13,6 +13,7 @@ const EXAMPLES = [
   { id: 'MeshGradient', title: 'Mesh Gradient', icon: 'color-palette' },
   { id: 'Volume', title: 'Volume Control', icon: 'volume-high' },
   { id: 'ConditionalButton', title: 'Conditional Button', icon: 'git-branch' },
+  { id: 'MorphingFab', title: 'Morphing FAB', icon: 'apps' },
   { id: 'Glassmorphism', title: 'Glassmorphism Tab Bar (Soon)', icon: 'layers', disabled: true },
 ];
 
