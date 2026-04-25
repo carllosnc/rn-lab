@@ -8,24 +8,26 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
 const ACTIONS = [
-  { icon: 'camera', label: 'Camera', color: '#6366F1' },
-  { icon: 'image', label: 'Gallery', color: '#8B5CF6' },
-  { icon: 'mic', label: 'Voice', color: '#EC4899' },
-  { icon: 'document-text', label: 'Note', color: '#F43F5E' },
+  { icon: 'camera', label: 'Camera' },
+  { icon: 'image', label: 'Gallery' },
+  { icon: 'mic', label: 'Voice' },
+  { icon: 'document-text', label: 'Note' },
+  { icon: 'location', label: 'Location' },
+  { icon: 'calendar', label: 'Events' },
+  { icon: 'cloud-upload', label: 'Upload' },
+  { icon: 'settings', label: 'Settings' },
+  { icon: 'notifications', label: 'Alerts' },
 ];
 
 export const MorphingFabScreen = () => {
   return (
     <View style={styles.container}>
       <Header title="Morphing FAB" light />
-      <MorphingFab expandedColor="black">
+      <MorphingFab expandedColor="#000000ff" isDark={true} icon="apps">
         {({ toggle }) => (
           <View style={styles.menuContent}>
             <View style={styles.menuHeader}>
               <Text style={styles.menuTitle}>Create New</Text>
-              <Pressable onPress={toggle} style={styles.closeButton}>
-                <Ionicons name="close" size={28} color="white" />
-              </Pressable>
             </View>
             <View style={styles.itemsGrid}>
               {ACTIONS.map((action, index) => (
@@ -37,12 +39,17 @@ export const MorphingFabScreen = () => {
                     toggle();
                   }}
                 >
-                  <View style={[styles.iconContainer, { backgroundColor: action.color + '15' }]}>
-                    <Ionicons name={action.icon as any} size={24} color={action.color} />
+                  <View style={styles.iconContainer}>
+                    <Ionicons name={action.icon as any} size={28} color="white" />
                   </View>
                   <Text style={styles.itemLabel}>{action.label}</Text>
                 </Pressable>
               ))}
+            </View>
+            <View style={styles.footer}>
+              <Pressable onPress={toggle} style={styles.bottomCloseButton}>
+                <Ionicons name="close" size={32} color="white" />
+              </Pressable>
             </View>
           </View>
         )}
@@ -59,47 +66,58 @@ const styles = StyleSheet.create({
   menuContent: {
     flex: 1,
     padding: 32,
-    paddingTop: 80,
+    justifyContent: 'center',
   },
   menuHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: '100%',
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 60,
   },
   menuTitle: {
-    fontSize: 28,
-    fontFamily: FONTS.inter.bold,
+    fontSize: 22,
+    fontFamily: FONTS.inter.regular,
     color: 'white',
+    textAlign: 'center',
   },
-  closeButton: {
-    width: 44,
-    height: 44,
+  footer: {
+    marginTop: 60,
+    width: '100%',
+    alignItems: 'center',
+  },
+  bottomCloseButton: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   itemsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 16,
+    gap: 0,
     justifyContent: 'space-between',
   },
   menuItem: {
-    width: '45%',
+    width: '30%',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 32,
   },
   iconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 16,
+    width: 68,
+    height: 68,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
   },
   itemLabel: {
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: FONTS.inter.medium,
     color: 'rgba(255,255,255,0.7)',
+    textAlign: 'center',
   },
 });

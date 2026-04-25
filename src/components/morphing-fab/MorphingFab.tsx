@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Pressable, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Pressable, Dimensions, BackHandler } from 'react-native';
 import {
   Canvas,
   RoundedRect,
@@ -16,37 +16,72 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import { StatusBar } from 'expo-status-bar';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 
-const FAB_SIZE = 64;
+const FAB_SIZE = 72;
 const MENU_WIDTH = 220;
 const MENU_HEIGHT = 280;
-const RADIUS_COLLAPSED = 32;
+const RADIUS_COLLAPSED = 36;
 const RADIUS_EXPANDED = 0;
 
 interface MorphingFabProps {
+  color?: string;
   expandedColor?: string;
+  isDark?: boolean; // Manual override for status bar style
+  icon?: string;
   children?: React.ReactNode | ((props: { toggle: () => void; isExpanded: boolean }) => React.ReactNode);
 }
 
 export const MorphingFab: React.FC<MorphingFabProps> = ({
   children,
+  color = '#000000',
   expandedColor = 'white',
+  isDark,
+  icon = 'add',
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const transition = useSharedValue(0); // 0 = collapsed, 1 = expanded
+  const radiusTransition = useSharedValue(0);
 
   const toggleMenu = () => {
     const nextState = !isExpanded;
     setIsExpanded(nextState);
+
+    // Bouncy spring for layout (position/size)
     transition.value = withSpring(nextState ? 1 : 0, {
-      damping: 45,
-      stiffness: 450,
+      damping: 25,
+      stiffness: 220,
       mass: 1,
     });
+
+    // Bouncy spring for border radius
+    radiusTransition.value = withSpring(nextState ? 1 : 0, {
+      damping: 25,
+      stiffness: 150,
+      mass: 1,
+    });
+
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   };
+
+  useEffect(() => {
+    const backAction = () => {
+      if (isExpanded) {
+        toggleMenu();
+        return true;
+      }
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, [isExpanded]);
 
   // Skia Animated Values
   const width = useDerivedValue(() => {
@@ -58,7 +93,7 @@ export const MorphingFab: React.FC<MorphingFabProps> = ({
   });
 
   const borderRadius = useDerivedValue(() => {
-    return interpolate(transition.value, [0, 1], [RADIUS_COLLAPSED, RADIUS_EXPANDED]);
+    return interpolate(radiusTransition.value, [0, 1], [RADIUS_COLLAPSED, RADIUS_EXPANDED]);
   });
 
   const x = useDerivedValue(() => {
@@ -93,12 +128,25 @@ export const MorphingFab: React.FC<MorphingFabProps> = ({
     borderRadius: borderRadius.value,
   }));
 
+  // Helper to determine if the background is dark
+  const isBackgroundDark = () => {
+    if (isDark !== undefined) return isDark;
+    
+    const darkColors = ['black', '#000000', 'red', '#380000', '#380000ff'];
+    const normalizedColor = expandedColor.toLowerCase();
+    return darkColors.some(c => normalizedColor.startsWith(c));
+  };
+
   return (
-    <View style={styles.container} pointerEvents="box-none">
+    <View style={[styles.container, { zIndex: isExpanded ? 1000 : 1 }]} pointerEvents="box-none">
+      <StatusBar
+        style={isExpanded && isBackgroundDark() ? 'light' : 'dark'} 
+        animated
+      />
       {/* Background Overlay when expanded */}
       {isExpanded && (
-        <Pressable 
-          style={StyleSheet.absoluteFill} 
+        <Pressable
+          style={StyleSheet.absoluteFill}
           onPress={toggleMenu}
         />
       )}
@@ -112,7 +160,7 @@ export const MorphingFab: React.FC<MorphingFabProps> = ({
             height={height}
             r={borderRadius}
             color={useDerivedValue(() => {
-              return interpolateColor(transition.value, [0, 1], ['#000000', expandedColor]);
+              return interpolateColor(transition.value, [0, 1], [color, expandedColor]);
             })}
           >
             <Shadow dx={0} dy={10} blur={20} color="rgba(0,0,0,0.1)" />
@@ -123,18 +171,18 @@ export const MorphingFab: React.FC<MorphingFabProps> = ({
       <Animated.View style={[styles.overlayContainer, overlayContainerStyle]} pointerEvents="box-none">
         {/* FAB Plus Icon */}
         <Animated.View style={[styles.fabButton, fabIconStyle]}>
-          <Ionicons name="add" size={32} color="white" />
+          <Ionicons name={icon as any} size={32} color="white" style={{ marginTop: 0 }} />
         </Animated.View>
 
         {/* Menu Items */}
-        <Animated.View style={[styles.menuContent, menuItemsStyle]} pointerEvents={isExpanded ? 'auto' : 'none'}>
+        <Animated.View style={[styles.menuContent, menuItemsStyle, { position: 'absolute' }]} pointerEvents={isExpanded ? 'auto' : 'none'}>
           {typeof children === 'function' ? children({ toggle: toggleMenu, isExpanded }) : children}
         </Animated.View>
 
         {/* Interaction Pressable */}
-        <Pressable 
+        <Pressable
           style={[styles.touchArea, isExpanded ? styles.touchAreaExpanded : styles.touchAreaCollapsed]} 
-          onPress={toggleMenu} 
+          onPress={toggleMenu}
         />
       </Animated.View>
     </View>
@@ -144,7 +192,6 @@ export const MorphingFab: React.FC<MorphingFabProps> = ({
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    zIndex: 1000,
   },
   canvas: {
     ...StyleSheet.absoluteFillObject,
@@ -156,6 +203,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   fabButton: {
+    position: 'absolute',
     width: FAB_SIZE,
     height: FAB_SIZE,
     justifyContent: 'center',
@@ -176,8 +224,6 @@ const styles = StyleSheet.create({
     height: 44,
   },
   menuContent: {
-    padding: 32,
-    paddingTop: 80,
     width: '100%',
     height: '100%',
   },
