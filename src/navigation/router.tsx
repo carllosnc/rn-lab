@@ -6,6 +6,7 @@ import { CryptoButtonScreen } from '../screens/CryptoButtonScreen';
 import { MeshGradientScreen } from '../screens/MeshGradientScreen';
 import { ToastScreen } from '../screens/ToastScreen';
 import { VolumeScreen } from '../screens/VolumeScreen';
+import { ConditionalButtonScreen } from '../screens/ConditionalButtonScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -14,6 +15,7 @@ export type RootStackParamList = {
   MeshGradient: undefined;
   Toast: undefined;
   Volume: undefined;
+  ConditionalButton: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -51,6 +53,10 @@ export const Router = () => {
       <Stack.Screen
         name="Volume"
         component={VolumeScreen}
+      />
+      <Stack.Screen
+        name="ConditionalButton"
+        component={ConditionalButtonScreen}
       />
     </Stack.Navigator>
   );

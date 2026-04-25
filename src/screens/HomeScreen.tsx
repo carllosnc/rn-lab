@@ -11,8 +11,8 @@ const EXAMPLES = [
   { id: 'LiquidBottomBar', title: 'Liquid Bottom Bar', icon: 'water' },
   { id: 'CryptoButton', title: 'Crypto Buttons', icon: 'logo-bitcoin' },
   { id: 'MeshGradient', title: 'Mesh Gradient', icon: 'color-palette' },
-  { id: 'Toast', title: 'Toast Notifications', icon: 'notifications' },
   { id: 'Volume', title: 'Volume Control', icon: 'volume-high' },
+  { id: 'ConditionalButton', title: 'Conditional Button', icon: 'git-branch' },
   { id: 'Glassmorphism', title: 'Glassmorphism Tab Bar (Soon)', icon: 'layers', disabled: true },
 ];
 
