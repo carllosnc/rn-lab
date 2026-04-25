@@ -131,11 +131,15 @@ export const MorphingFab: React.FC<MorphingFabProps> = ({
   // Helper to determine if the background is dark
   const isBackgroundDark = () => {
     if (isDark !== undefined) return isDark;
-    
+
     const darkColors = ['black', '#000000', 'red', '#380000', '#380000ff'];
     const normalizedColor = expandedColor.toLowerCase();
     return darkColors.some(c => normalizedColor.startsWith(c));
   };
+
+  const rectColor = useDerivedValue(() => {
+    return interpolateColor(transition.value, [0, 1], [color, expandedColor]);
+  });
 
   return (
     <View style={[styles.container, { zIndex: isExpanded ? 1000 : 1 }]} pointerEvents="box-none">
@@ -159,9 +163,7 @@ export const MorphingFab: React.FC<MorphingFabProps> = ({
             width={width}
             height={height}
             r={borderRadius}
-            color={useDerivedValue(() => {
-              return interpolateColor(transition.value, [0, 1], [color, expandedColor]);
-            })}
+            color={rectColor}
           >
             <Shadow dx={0} dy={10} blur={20} color="rgba(0,0,0,0.1)" />
           </RoundedRect>
@@ -192,11 +194,13 @@ export const MorphingFab: React.FC<MorphingFabProps> = ({
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
+    flex: 1,
   },
   canvas: {
     ...StyleSheet.absoluteFillObject,
   },
   overlayContainer: {
+    flex: 1,
     position: 'absolute',
     overflow: 'hidden',
     justifyContent: 'center',

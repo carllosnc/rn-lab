@@ -8,6 +8,7 @@ import { ToastScreen } from '../screens/ToastScreen';
 import { VolumeScreen } from '../screens/VolumeScreen';
 import { ConditionalButtonScreen } from '../screens/ConditionalButtonScreen';
 import { MorphingFabScreen } from '../screens/MorphingFabScreen';
+import { LockScreenScreen } from '../screens/LockScreenScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   Volume: undefined;
   ConditionalButton: undefined;
   MorphingFab: undefined;
+  LockScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -63,6 +65,10 @@ export const Router = () => {
       <Stack.Screen
         name="MorphingFab"
         component={MorphingFabScreen}
+      />
+      <Stack.Screen
+        name="LockScreen"
+        component={LockScreenScreen}
       />
     </Stack.Navigator>
   );

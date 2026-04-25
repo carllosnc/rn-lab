@@ -147,6 +147,12 @@ export const ConditionalButton: React.FC<ConditionalButtonProps> = ({
     ],
   }));
 
+  const leftButtonColor = useDerivedValue(() => {
+    const baseColor = interpolateColor(transition.value, [0, 1], ['#1E293B', '#EF4444']);
+    const loadingColor = interpolateColor(isLoadingShared.value, [0, 1], [baseColor, '#CBD5E1']);
+    return interpolateColor(isConfirmedShared.value, [0, 1], [loadingColor, '#22C55E']);
+  });
+
   return (
     <View style={styles.container}>
       <Canvas style={styles.canvas}>
@@ -159,11 +165,7 @@ export const ConditionalButton: React.FC<ConditionalButtonProps> = ({
               width={BUTTON_WIDTH}
               height={BUTTON_HEIGHT}
               r={28}
-              color={useDerivedValue(() => {
-                const baseColor = interpolateColor(transition.value, [0, 1], ['#1E293B', '#EF4444']);
-                const loadingColor = interpolateColor(isLoadingShared.value, [0, 1], [baseColor, '#CBD5E1']);
-                return interpolateColor(isConfirmedShared.value, [0, 1], [loadingColor, '#22C55E']);
-              })}
+              color={leftButtonColor}
             />
           </Group>
 
